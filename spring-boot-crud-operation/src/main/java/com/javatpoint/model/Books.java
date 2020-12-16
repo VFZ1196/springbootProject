@@ -25,17 +25,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 
-@Table
+@Table(name="books")
 
 public class Books {
 	
 	@Id
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long bookid;
+	private long bookId;
 	
 	@Column
-	private String bookname;
+	private String bookName;
 	
 	@Column
 	private String author;
@@ -53,20 +53,20 @@ public class Books {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDateTime updateDateTime;
 
-	public long getBookid() {
-		return bookid;
+	public long getBookId() {
+		return bookId;
 	}
 
-	public void setBookid(long bookid) {
-		this.bookid = bookid;
+	public void setBookId(long bookId) {
+		this.bookId = bookId;
 	}
 
-	public String getBookname() {
-		return bookname;
+	public String getBookName() {
+		return bookName;
 	}
 
-	public void setBookname(String bookname) {
-		this.bookname = bookname;
+	public void setBookname(String bookName) {
+		this.bookName = bookName;
 	}
 
 	public String getAuthor() {
