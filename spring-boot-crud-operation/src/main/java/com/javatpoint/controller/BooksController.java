@@ -3,6 +3,8 @@ package com.javatpoint.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +20,10 @@ import com.javatpoint.service.BooksService;
 
 @RestController
 public class BooksController {
-	/*
+	
+    private final Logger log = LoggerFactory.getLogger(BooksController.class);
 
+	/*
 	@Autowired
 	BooksService service;
 	
@@ -38,7 +42,7 @@ public class BooksController {
 	@DeleteMapping("/book/{bookid}")
 	private void deleteBook(@PathVariable("bookid") long bookid) {
 		service.delete(bookid);
-	}
+	}this.getClass()
 	
 	
 	//post the book detail in the database
@@ -62,27 +66,31 @@ public class BooksController {
 	
 	@GetMapping("/books")
 	private List<Books> getAllBooks(){
+		log.info("Successfully record fetched");
 		return booksRepository.findByOrderByBookIdDesc();
 	}
 	
-	@GetMapping("/books/{bookid}")
-	private Books getBooks(@PathVariable("bookid") Long bookid) {
-		return booksRepository.findById(bookid).get();
+	@GetMapping("/books/{bookId}")
+	private Books getBooks(@PathVariable Long bookId) {
+		log.info("Successsfully record fetched of bookId " + bookId);
+		return booksRepository.findById(bookId).get();
 	}
 	
-	@DeleteMapping("/books/{bookid}")
-	private void deleteBook(@PathVariable("bookid") Long bookid) {
-		booksRepository.deleteById(bookid);
+	@DeleteMapping("/books/{bookId}")
+	private void deleteBook(@PathVariable Long bookId) {
+		log.info("Successfully record deleted of bookId " + bookId);
+		booksRepository.deleteById(bookId);
 	}
 	
 	@PostMapping("/books")
 	private Books saveBook(@RequestBody Books books) {
+		log.info("Successfully record inserted");
 		return booksRepository.save(books);
 	}
-	/*
-	@PutMapping("/books/{bookid}")
-	private Books update(@PathVariable("bookid") Long bookid) {
-		Optional<Books> books = booksRepository.findById(bookid);		
+	/*this.getClass()
+	@PutMapping("/books/{bookId}")
+	private Books update(@PathVariable("bookId") Long bookId) {
+		Optional<Books> books = booksRepository.findById(bookId);		
 		Books updateBook = booksRepository.save(books);
 		return updateBook;
                                                      

@@ -100,5 +100,10 @@ public class Books {
 	public void setUpdateDateTime(LocalDateTime updateDateTime) {
 		this.updateDateTime = updateDateTime;
 	}
+
+	@Override
+	public String toString() {
+		return "Books [bookId=" + bookId + "]";
+	}
 	
 }
