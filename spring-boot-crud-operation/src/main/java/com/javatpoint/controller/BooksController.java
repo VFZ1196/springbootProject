@@ -42,7 +42,7 @@ public class BooksController {
 	@DeleteMapping("/book/{bookid}")
 	private void deleteBook(@PathVariable("bookid") long bookid) {
 		service.delete(bookid);
-	}this.getClass()
+	}
 	
 	
 	//post the book detail in the database
@@ -71,14 +71,21 @@ public class BooksController {
 	}
 	
 	@GetMapping("/books/{bookId}")
-	private Books getBooks(@PathVariable Long bookId) {
-		log.info("Successsfully record fetched of bookId " + bookId);
-		return booksRepository.findById(bookId).get();
+	private Optional<Books> getBooks(@PathVariable Long bookId) {
+		
+		Optional<Books> book = booksRepository.findById(bookId);		
+		if(book.isPresent()) {
+			log.info("Successsfully record fetched of bookId " + bookId);
+		}
+		return book;
 	}
 	
 	@DeleteMapping("/books/{bookId}")
 	private void deleteBook(@PathVariable Long bookId) {
+		Optional<Books> book = booksRepository.findById(bookId);		
+		if(book.isPresent()) {
 		log.info("Successfully record deleted of bookId " + bookId);
+		}
 		booksRepository.deleteById(bookId);
 	}
 	
@@ -87,7 +94,7 @@ public class BooksController {
 		log.info("Successfully record inserted");
 		return booksRepository.save(books);
 	}
-	/*this.getClass()
+/*
 	@PutMapping("/books/{bookId}")
 	private Books update(@PathVariable("bookId") Long bookId) {
 		Optional<Books> books = booksRepository.findById(bookId);		
