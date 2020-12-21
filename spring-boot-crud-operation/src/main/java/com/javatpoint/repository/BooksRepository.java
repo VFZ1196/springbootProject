@@ -12,7 +12,7 @@ import com.javatpoint.model.Books;
 public interface BooksRepository extends JpaRepository<Books, Long> {
 	
 	@Query(value="select * from books order by book_id Desc", nativeQuery=true)
+	
     List<Books> findByOrderByBookIdDesc();
 
-    //List<Books> findByBookNameOrderByBookIdAsc(String bookName);
 }

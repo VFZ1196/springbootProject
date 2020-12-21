@@ -8,25 +8,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import org.springframework.format.annotation.DateTimeFormat;
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-
 @Entity
 
 @Table(name="books")
-
+@SQLDelete(sql = "UPDATE books SET deleted=false WHERE book_id=?")
+//@Where(clause = "deleted = false")
 public class Books {
 	
 	@Id
@@ -43,6 +36,9 @@ public class Books {
 	@Column
 	private int price;
 	
+	@Column
+	private Boolean deleted = true;
+	
 	@CreationTimestamp
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -52,6 +48,10 @@ public class Books {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDateTime updateDateTime;
+	
+	public Books() {
+		
+	}
 
 	public long getBookId() {
 		return bookId;
@@ -99,6 +99,14 @@ public class Books {
 
 	public void setUpdateDateTime(LocalDateTime updateDateTime) {
 		this.updateDateTime = updateDateTime;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override

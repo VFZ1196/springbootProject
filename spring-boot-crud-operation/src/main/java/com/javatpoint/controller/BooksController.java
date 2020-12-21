@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.javatpoint.model.Books;
 import com.javatpoint.repository.BooksRepository;
-import com.javatpoint.service.BooksService;
 
 @RestController
 public class BooksController {
@@ -33,15 +30,15 @@ public class BooksController {
 		return service.getAllBooks();
 	}
 	//retrieve a specific book from database
-	@GetMapping("/book/{bookid}")
-	private Books getBooks(@PathVariable("bookid") long bookid) {
-		return service.getBooksById(bookid);
+	@GetMapping("/book/{bookId}")
+	private Books getBooks(@PathVariable("bookId") long bookId) {
+		return service.getBooksById(bookId);
 	}
 	
 	//delete a specific book
-	@DeleteMapping("/book/{bookid}")
-	private void deleteBook(@PathVariable("bookid") long bookid) {
-		service.delete(bookid);
+	@DeleteMapping("/book/{bookId}")
+	private void deleteBook(@PathVariable("bookId") long bookId) {
+		service.delete(bookId);
 	}
 	
 	
@@ -82,7 +79,7 @@ public class BooksController {
 	
 	@DeleteMapping("/books/{bookId}")
 	private void deleteBook(@PathVariable Long bookId) {
-		Optional<Books> book = booksRepository.findById(bookId);		
+		Optional<Books> book = booksRepository.findById(bookId);	
 		if(book.isPresent()) {
 		log.info("Successfully record deleted of bookId " + bookId);
 		}
