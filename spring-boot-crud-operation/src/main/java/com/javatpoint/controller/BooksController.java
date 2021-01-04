@@ -59,12 +59,12 @@ public class BooksController {
 	*/
 	
 	@Autowired
-	BooksRepository booksRepository;
+     BooksRepository booksRepository;
 	
 	@GetMapping("/books")
 	private List<Books> getAllBooks(){
 		log.info("Successfully record fetched");
-		return booksRepository.findByOrderByBookIdDesc();
+		return booksRepository.findByOrderByBookId();
 	}
 	
 	@GetMapping("/books/{bookId}")
