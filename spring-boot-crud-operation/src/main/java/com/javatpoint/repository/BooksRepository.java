@@ -12,10 +12,18 @@ import com.javatpoint.model.Books;
 public interface BooksRepository extends JpaRepository<Books, Long> {
 	
 	//@Query(value="select * from books order by book_id Desc", nativeQuery=true)
+	
+	//@Query(value="select * from books order by price DESC", nativeQuery=true)
+	
 	//@Query(value = "select * from books", nativeQuery = true)
 	
-	@Query(value="select books.book_name from books where book_id>48", nativeQuery=true)
+	//@Query(value="select * from books where book_id>49", nativeQuery = true)
 	
+	//@Query(value="select * from books where price>450", nativeQuery = true)
+	
+	//This query is not working why?
+	@Query(value="select books.book_name from books where book_id=48", nativeQuery=true)
+		
     List<Books> findByOrderByBookId();
 
 }
