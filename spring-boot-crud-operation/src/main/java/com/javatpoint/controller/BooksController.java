@@ -6,11 +6,13 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -73,12 +75,10 @@ public class BooksController {
 
 	@DeleteMapping("/books/{bookId}")
 	private void deleteBook(@PathVariable Long bookId) {
-		System.out.println("bookid"+bookId);
-	Optional<Books> book = booksRepository.findById(bookId);
-		if (book.isPresent()) {
-			log.info("Successfully record deleted of bookId " + bookId);
-		}
+
 		booksRepository.deleteById(bookId);
+		log.info("Successfully record deleted of bookId " + bookId);
+
 	}
 
 	@PostMapping("/books")
@@ -86,6 +86,18 @@ public class BooksController {
 		log.info("Successfully record inserted");
 		return booksRepository.save(books);
 	}
+
+	@PutMapping("/books/{bookId}")
+	public ResponseEntity<Books> updateBooksRecord(@PathVariable Long bookId, @RequestBody Books book) {
+		Books books = booksRepository.findById(bookId).get();
+		books.setBookname(book.getBookName());
+		books.setAuthor(book.getAuthor());
+		books.setPrice(book.getPrice());
+		books.setDeleted(book.getDeleted());
+		Books updatedBook = booksRepository.save(books);
+		return ResponseEntity.ok(updatedBook);
+	}
+
 	/*
 	 * @PutMapping("/books/{bookId}") private Books update(@PathVariable("bookId")
 	 * Long bookId) { Optional<Books> books = booksRepository.findById(bookId);
